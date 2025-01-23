@@ -8,11 +8,11 @@ const generateToken = (email) => {
 }
 const registerUser = async(req, res) => {
     try {
-        const {email, password} = req.body; 
+        const { email, password, phoneNo, DOB, driversLicense } = req.body;
         const existingUser = await User.findOne({ email }); 
 
         if (existingUser) {
-            return res.status(400).error('User already exists'); 
+            return res.status(400).json('User already exists'); 
         }
 
         const user = await User.create({
@@ -25,12 +25,11 @@ const registerUser = async(req, res) => {
 
         if (user) {
             res.status(201).json({
-                _id: user.id,
                 email: user.email, 
                 phoneNo: user.phoneNo, 
                 DOB: user.DOB, 
                 driversLicense: user.driversLicense,
-                token: generateToken(user._id), 
+                token: generateToken(user.email)
             }); 
         }
         else {
