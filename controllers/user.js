@@ -5,6 +5,7 @@ const User = require('../models/user');
 const generateToken = (email) => {
     return jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: "10d" }); 
 }
+
 const registerUser = async(req, res) => {
     try {
         const { email, password, phoneNo, DOB, driversLicense } = req.body;
@@ -35,7 +36,7 @@ const registerUser = async(req, res) => {
             res.status(400).json({ message: 'Invalid data' }); 
         }
     } catch (err) {
-        console.errror(err); 
+        console.error(err); 
         res.status(500).json({ message: 'Server error'}); 
     }
 }
